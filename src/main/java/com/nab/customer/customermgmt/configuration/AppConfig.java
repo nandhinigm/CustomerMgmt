@@ -16,11 +16,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.nab.customer.customermgmt.dao.CustomerDao;
-import com.nab.customer.customermgmt.dao.CustomerDaoImpl;
-import com.nab.customer.customermgmt.service.CustomerService;
-import com.nab.customer.customermgmt.service.CustomerServiceImpl;
-
 @Configuration
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement

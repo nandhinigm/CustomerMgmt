@@ -88,4 +88,8 @@ public class CustomerDaoImpl implements CustomerDao {
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();		
 	}
+	
+	public void setSessionFactory(SessionFactory sessionfactory){
+	    this.sessionFactory = sessionfactory;
+	}
 }

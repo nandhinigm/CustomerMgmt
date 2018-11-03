@@ -8,8 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.nab.customer.customermgmt.controller" })
-@Import({WebSecurityConfig.class,})
+@ComponentScan(basePackages = { "com.nab.customer.customermgmt.controller", 
+		"com.nab.customer.customermgmt.security"})
+@Import({WebSecurityConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 }

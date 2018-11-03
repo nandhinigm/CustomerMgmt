@@ -1,5 +1,6 @@
 package com.nab.customer.customermgmt.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.hibernate.Session;
@@ -100,10 +101,12 @@ public class CustomerServiceImplTest {
 	} 	
 	
 	@Test
-	public void test_update_success() {
+	public void test_read_success() throws InvalidDataException {
+		when(customerDao.save(customer)).thenReturn(new Long(1));
+		when(customerDao.save(customer)).thenReturn(new Long(1));
 		when(customerDao.get(1)).thenReturn(customer);
-		this.service.get(1);
+		Long id = this.service.save(customer);
+		assertEquals(this.service.get(id), customer);
 	} 
-	*
 	*/
 }

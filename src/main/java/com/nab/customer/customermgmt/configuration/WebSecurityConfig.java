@@ -16,27 +16,28 @@ import com.nab.customer.customermgmt.security.CustomBasicAuthenticationEntryPoin
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	private static final Logger logger = Logger.getLogger(WebSecurityConfig.class);
- 
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-    	logger.debug("Inside global security");
-    	auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN");
-    	auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-    }
-    
-    @Bean
-    public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
-        return new CustomBasicAuthenticationEntryPoint();
-    }
- 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	logger.debug("Inside security");
-    	http.csrf().disable();
-    	http.authorizeRequests().antMatchers("/").permitAll()
-    	                        .anyRequest().authenticated();
-    	http.httpBasic().authenticationEntryPoint(getBasicAuthEntryPoint());        
-    }
+
+	@Autowired
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		logger.debug("Inside global security");
+		auth.inMemoryAuthentication().passwordEncoder(org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance())
+		.withUser("user").password("password").roles("USER").and()
+		.withUser("admin").password("password").roles("USER", "ADMIN");    	
+	}
+
+	@Bean
+	public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
+		return new CustomBasicAuthenticationEntryPoint();
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		logger.debug("Inside security");
+		http.httpBasic().authenticationEntryPoint(getBasicAuthEntryPoint())
+		.and().authorizeRequests().antMatchers("/customer/**")
+		.hasRole("USER").antMatchers("/**").hasRole("ADMIN").and()
+		.csrf().disable().headers().frameOptions().disable();
+	}
 }
