@@ -1,8 +1,5 @@
 package com.nab.customer.customermgmt.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
